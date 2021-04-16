@@ -16,16 +16,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// 全局顺序消息，topic只有一个queue，天然保证有序
-// 分区顺序消息，消息通过sharding key分区到某个queue，这个queue，天然保证有序
-// 一个客户端订阅topic，来消息时，客户端会独占一个topic的queue
+// 全局顺序消息，topic只有一个queue，队列天然保证有序
+// 分区顺序消息，消息通过sharding key分区到某个queue，队列天然保证有序
+// 一个客户端订阅topic，接收消息时，客户端会独占topic的这个queue，客户端能独占多个queue
+// 由客户端使用的监听类来决定是顺序消费，还是并发消费
 
 // 使用这个MessageListenerOrderly有序监听类，是实现顺序消费的关键
     public class OrderlyCustomer {
 
     public static void main(String[] args) throws MQClientException {
         send();
-//        receive();
+        receive();
 
     }
 
@@ -109,18 +110,18 @@ import java.util.List;
         orderList.add(new OrderStep(15103111039L,"推送"));
         orderList.add(new OrderStep(15103117235L,"完成"));
         orderList.add(new OrderStep(15103111039L,"完成"));
-        orderList.add(new OrderStep(15103111041L,"创建"));
-        orderList.add(new OrderStep(15103111026L,"创建"));
-        orderList.add(new OrderStep(15103111098L,"创建"));
-        orderList.add(new OrderStep(15103111041L,"付款"));
-        orderList.add(new OrderStep(15103111026L,"付款"));
-        orderList.add(new OrderStep(15103111098L,"付款"));
-        orderList.add(new OrderStep(15103111041L,"推送"));
-        orderList.add(new OrderStep(15103111026L,"推送"));
-        orderList.add(new OrderStep(15103111098L,"推送"));
-        orderList.add(new OrderStep(15103111041L,"完成"));
-        orderList.add(new OrderStep(15103111026L,"完成"));
-        orderList.add(new OrderStep(15103111098L,"完成"));
+//        orderList.add(new OrderStep(15103111041L,"创建"));
+//        orderList.add(new OrderStep(15103111026L,"创建"));
+//        orderList.add(new OrderStep(15103111098L,"创建"));
+//        orderList.add(new OrderStep(15103111041L,"付款"));
+//        orderList.add(new OrderStep(15103111026L,"付款"));
+//        orderList.add(new OrderStep(15103111098L,"付款"));
+//        orderList.add(new OrderStep(15103111041L,"推送"));
+//        orderList.add(new OrderStep(15103111026L,"推送"));
+//        orderList.add(new OrderStep(15103111098L,"推送"));
+//        orderList.add(new OrderStep(15103111041L,"完成"));
+//        orderList.add(new OrderStep(15103111026L,"完成"));
+//        orderList.add(new OrderStep(15103111098L,"完成"));
         return orderList;
     }
 
