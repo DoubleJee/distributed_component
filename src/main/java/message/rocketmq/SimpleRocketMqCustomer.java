@@ -17,7 +17,7 @@ public class SimpleRocketMqCustomer {
         consumer.setNamesrvAddr("localhost:9876");
         // 设置订阅Topic与Tag，tag为*代表所有的不过滤
         consumer.subscribe("ORDER", "createOrder");
-        // 注册消息监听者，用来处理从broker拉取过来的消息
+        // 注册消息监听者，用来处理从broker拉取过来的消息，并发处理
         consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
             msgs.forEach((msg) -> {
                 String msgBody = new String(msg.getBody(), StandardCharsets.UTF_8);

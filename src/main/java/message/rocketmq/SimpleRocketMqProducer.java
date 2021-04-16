@@ -24,6 +24,7 @@ public class SimpleRocketMqProducer {
 //            }
 //            asyncSend(next);
 //        }
+        syncSend("first msg");
 
     }
 

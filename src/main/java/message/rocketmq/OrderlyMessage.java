@@ -18,11 +18,11 @@ import java.util.List;
 
 // 全局顺序消息，topic只有一个queue，队列天然保证有序
 // 分区顺序消息，消息通过sharding key分区到某个queue，队列天然保证有序
-// 一个客户端订阅topic，接收消息时，客户端会独占topic的这个queue，客户端能独占多个queue
+// 一个客户端订阅topic，接收消息时，客户端会独占topic的这个queue，客户端能独占多个queue（范围是同一个消费组）
 // 由客户端使用的监听类来决定是顺序消费，还是并发消费
 
 // 使用这个MessageListenerOrderly有序监听类，是实现顺序消费的关键
-    public class OrderlyCustomer {
+    public class OrderlyMessage {
 
     public static void main(String[] args) throws MQClientException {
         send();
