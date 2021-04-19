@@ -12,6 +12,11 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+/**
+ * 每个生产者都有唯一的ID
+ * 生产者发送消息时会从topic路由信息中，找到Topic所在的broker-master实例集合，然后从中选择一个topic队列进行发送（有退避算法）
+ * 有同步和异步发送方式
+ */
 public class SimpleRocketMqProducer {
 
     public static void main(String[] args) {

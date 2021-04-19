@@ -8,6 +8,13 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import java.nio.charset.StandardCharsets;
 
 
+/**
+ * 消费者负载均衡是在客户端做的，（类似于分页分配，每个消费者是页数，队列是size，最后求得消费者消费哪些个队列）
+ * 一个消息队列在同一时间只允许被同一消费组内的一个消费者消费，一个消息消费者能同时消费多个消息队列，独占的
+ *
+ * Tag过滤，是服务器端过滤，是通过hash值过滤的，因此消费者拿到后最好再经过字符串比对最好
+ * SQL92过滤，是客户端过滤
+ */
 public class SimpleRocketMqCustomer {
 
     public static void main(String[] args) throws MQClientException {
@@ -33,5 +40,7 @@ public class SimpleRocketMqCustomer {
 
         // 最后关闭消费者
 //        consumer.shutdown();
+
+        //
     }
 }

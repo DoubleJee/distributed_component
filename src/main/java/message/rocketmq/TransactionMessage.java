@@ -15,9 +15,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-// 事务消息，
-// 1.MQ接收到事务消息后，会通知对应的事务生产者可以执行本地事务了
-// 2.MQ会定期检查事务状态，如果返回事务成功，就会将消息给消费者消费，回滚则不会给消费者消费
+/**
+ * 事务消息，
+ * 1.MQ接收到事务消息后，会通知对应的事务生产者可以执行本地事务了
+ * 2.MQ会定期检查事务状态，如果返回事务成功，就会将消息给消费者消费，回滚则不会给消费者消费
+ *
+ * 细节：
+ * RocketMQ是2PC消息
+ * 事务消息会将原topic、原queue备份然后放入消息属性，并将事务消息放入RMQ_SYS_TRANS_HALF_TOPIC主题
+ * 如果事务COMMIT状态会放入原目标Topic队列，如果ROLLBACK，将不会放入目标topic队列，消费者不会消费到
+ * 确认了事务状态的消息是Op消息
+ */
+
 public class TransactionMessage {
 
     public static void main(String[] args) throws MQClientException {

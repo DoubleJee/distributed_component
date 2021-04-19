@@ -27,4 +27,10 @@ public class SimpleTransactionListener implements TransactionListener {
         localTrans.put(msg.getTransactionId(), LocalTransactionState.ROLLBACK_MESSAGE);
         return localTrans.get(msg.getTransactionId());
     }
+
+    /**
+     * 如果检查一个消息超过了15次（默认）的话，就会丢弃这个消息，通过transactionCheckMax属性可以配置临界值（阈值）
+     * 事务消息将在transactionTimeout 时间后进行状态检查
+     *
+     */
 }
