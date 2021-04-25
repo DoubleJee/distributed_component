@@ -17,6 +17,10 @@ import java.util.Scanner;
  * 生产者发送消息时会从topic路由信息中，找到Topic所在的broker-master实例集合，然后从中选择一个topic队列进行发送（有退避算法）
  * 有同步和异步发送方式
  */
+
+/**
+ * 消息重投机制：当消息投递失败后，会尝试选择其他的broker进行投递，可以设置失败重投最大次数，生产者流控不会尝试消息重投，同步和异步方式有消息重试，oneway没有消息重试
+ */
 public class SimpleRocketMqProducer {
 
     public static void main(String[] args) {
@@ -29,6 +33,7 @@ public class SimpleRocketMqProducer {
 //            }
 //            asyncSend(next);
 //        }
+        // producer.createTopicKey("XXXX")，用于在发送消息时，自动创建服务器不存在的topic
         syncSend("first msg");
 
     }

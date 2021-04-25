@@ -15,6 +15,13 @@ import java.nio.charset.StandardCharsets;
  * Tag过滤，是服务器端过滤，是通过hash值过滤的，因此消费者拿到后最好再经过字符串比对最好
  * SQL92过滤，是客户端过滤
  */
+
+/**
+ * 消息重试消费机制：
+ * RocketMQ会针对每个消费组有一个%RETRY%+consumerGroup重试队列
+ * 各种异常原因导致消费者端无法消费的消息，会先保存至延迟队列，通过自带的延迟机制来做到重试级别越大间隔越久，之后到达时间将消息重新保存至%RETRY%+consumerGroup重试队列
+ * 消费一直失败达到设定的最大次数后会发到消费者对应的特殊队列，叫做死信队列
+ */
 public class SimpleRocketMqCustomer {
 
     public static void main(String[] args) throws MQClientException {
@@ -32,7 +39,7 @@ public class SimpleRocketMqCustomer {
             });
 
             // ack该消息已经消费成功
-            return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            return ConsumeConcurrentlyStatus.CONSUME_SUCCESS; // 返回结果和重试机制关系，具体见ConsumeMessageConcurrentlyService.java:167
 
         });
         // 启动consumer实例，建立NameSrv与Broker连接

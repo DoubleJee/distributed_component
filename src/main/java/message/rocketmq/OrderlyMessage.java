@@ -81,8 +81,8 @@ import java.util.List;
         consumer.subscribe("FULL_BL_ORDER", "TagA || TagC || TagD");
 
 
-        // MessageListenerOrderly类，每个队列有唯一的customer线程消费（在消费者集群情况下也会保证），因此有序消费，是实现顺序消费的关键
-        // MessageListenerConcurrently类，随机分配线程，每个队列有多个线程消费，因此并发消费
+        // MessageListenerOrderly类，每个队列有唯一的customer线程消费（在消费者集群情况下也会保证），因此有序消费，是实现顺序消费的关键，当消费一个消息失败后，不跳过，会重试消费当前消息，不会去消费其他消息（last_ack？当前ack的消息前面的消息一定都被ack了）
+        // MessageListenerConcurrently类，随机分配线程，每个队列有多个线程消费，因此并发消费，当消费一个消息失败后，会跳过这个消息（有重试消费机制），继续消费其他消息
         consumer.registerMessageListener((MessageListenerOrderly) (msgs, context) -> {
             context.setAutoCommit(true);
             msgs.forEach((msg) -> {
